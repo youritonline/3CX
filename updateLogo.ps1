@@ -14,7 +14,8 @@
 $3cxurl  = '' #Enter your url here including the trailing forward slash (eg. https://xyz.3cx.com.au/)
 $3cxuser = '' #3cx admin user, consider creating a restricterd admin user 
 $3cxpass = '' #3cx Password
-$logo="" #set this to match the logo file name in 3CX
+#commented line out as line 71 now looks up the logo filename from the system
+#$logo="" #set this to match the logo file name in 3CX
 
 
 ### Start Script
@@ -64,7 +65,10 @@ $Extns |% {
         Write-host "phone Logo: $($_.PhoneLogo.selected)"
         Write-host "phone Logos available: $($_.PhoneLogo.possibleValues)"
         $readPropertyBody = "{`"Path`":{`"ObjectId`":$ExtID,`"PropertyPath`":[{`"Name`":`"PhoneDevices`",`"IdInCollection`":$($_.id)},{`"Name`":`"PhoneLogo`"}]},`"State`":{`"Start`":0,`"Search`":`"`"},`"Count`":1000}"
+        #lookup the Possible Values for logos
         $readProperty = iwr -Uri "$($3cxurl)api/edit/readProperty" -Method Post -Headers $headers -websession $sesh -Body $readPropertyBody -ContentType "application/json;charset=UTF-8" 
+        #set the logo to the 2nd option (index #1)
+        $logo = ($readProperty.Content |convertfrom-json).PossibleValues[1]
         $logobody = "{`"Path`":{`"ObjectId`":$ExtID,`"PropertyPath`":[{`"Name`":`"PhoneDevices`",`"IdInCollection`":$($_.id)},{`"Name`":`"PhoneLogo`"}]},`"PropertyValue`":`"$logo`"}"
         $UpdateLogo = iwr -Uri "$($3cxurl)api/edit/update" -Method Post -Headers $headers -websession $sesh -Body $logobody -ContentType "application/json;charset=UTF-8" 
         # write-host "test body: $logobody"
