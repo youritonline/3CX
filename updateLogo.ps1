@@ -2,7 +2,7 @@
 #                                                              #
 #           3CX Logo Upadter Information Script                # 
 #                                                              #
-# Note: 1. Storing Credentials in a script is not recomended!  #
+# Note: 1. Storing Credentials in a script is not recommended! #
 #       2. Running this script is at your own risk             #
 #                                                              #
 #                                                              #
