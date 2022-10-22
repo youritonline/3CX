@@ -64,6 +64,10 @@ $Extns |% {
         Write-host "phone model: $($_.model._value)"
         Write-host "phone Logo: $($_.PhoneLogo.selected)"
         Write-host "phone Logos available: $($_.PhoneLogo.possibleValues)"
+        if ($null -eq $($_.PhoneLogo.possibleValues)){
+            write-host "Phone does not support logos" -ForegroundColor Magenta
+            return
+        }
         $readPropertyBody = "{`"Path`":{`"ObjectId`":$ExtID,`"PropertyPath`":[{`"Name`":`"PhoneDevices`",`"IdInCollection`":$($_.id)},{`"Name`":`"PhoneLogo`"}]},`"State`":{`"Start`":0,`"Search`":`"`"},`"Count`":1000}"
         #lookup the Possible Values for logos
         $readProperty = iwr -Uri "$($3cxurl)api/edit/readProperty" -Method Post -Headers $headers -websession $sesh -Body $readPropertyBody -ContentType "application/json;charset=UTF-8" 
