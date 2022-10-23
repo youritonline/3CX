@@ -1,6 +1,6 @@
 ################################################################
 #                                                              #
-#           3CX Logo Upadter Information Script                # 
+#                   3CX Logo Upadter Script                    # 
 #                                                              #
 # Note: 1. Storing Credentials in a script is not recommended! #
 #       2. Running this script is at your own risk             #
